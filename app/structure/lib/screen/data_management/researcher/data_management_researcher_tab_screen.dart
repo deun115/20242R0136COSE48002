@@ -46,7 +46,6 @@ class _DataManagementResearcherTabScreenState
     return Scaffold(
       appBar: CustomAppBar(
         title: '데이터 관리',
-        backButton: true,
         tabController: _tabController,
         tabs: const [
           Tab(text: '추가 정보 입력'),

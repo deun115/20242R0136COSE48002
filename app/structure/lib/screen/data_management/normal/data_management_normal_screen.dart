@@ -38,8 +38,6 @@ class _DataManagementNormalScreenState
       child: Scaffold(
         appBar: const CustomAppBar(
           title: '데이터 관리',
-          backButton: true,
-          closeButton: false,
         ),
         body: Stack(
           children: [
