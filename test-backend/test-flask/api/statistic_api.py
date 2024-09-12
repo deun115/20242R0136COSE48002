@@ -1,13 +1,10 @@
 from db.db_controller import (
     get_num_of_processed_raw,
-    get_num_of_cattle_pig,
     get_num_of_primal_part,
     get_num_by_farmAddr,
     get_probexpt_of_meat,
     get_sensory_of_meat,
-    get_sensory_of_processed_heatedmeat,
     get_sensory_of_raw_heatedmeat,
-    get_probexpt_of_processed_heatedmeat,
     get_timeseries_of_cattle_data,
 )
 from flask import (
@@ -33,31 +30,6 @@ def getRatioFreshAndProcessed():
             return jsonify(ratio_data), 200
         else:
             return jsonify({"msg": "Invalid Parameter"}), 400
-    except Exception as e:
-        logger.exception(str(e))
-        return (
-            jsonify(
-                {"msg": "Server Error", "time": datetime.now().strftime("%H:%M:%S")}
-            ),
-            505,
-        )
-
-
-# 2. 소, 돼지 개수
-@statistic_api.route("/counts/cattle-and-pork", methods=["GET", "POST"])
-def getCountsCattleAndPork():
-    try:
-        if request.method == "GET":
-            db_session = current_app.db_session
-            start = safe_str(request.args.get("start"))
-            end = safe_str(request.args.get("end"))
-            if start and end:
-                return get_num_of_cattle_pig(db_session, start, end)
-            else:
-                return jsonify("No id parameter"), 401
-
-        else:
-            return jsonify({"msg": "Invalid Route, Please Try Again."}), 404
     except Exception as e:
         logger.exception(str(e))
         return (
@@ -292,9 +264,10 @@ def getTimeSeriesData():
         start = safe_str(request.args.get("start"))
         end = safe_str(request.args.get("end"))
         meat_value = safe_str(request.args.get("meatValue"))
+        seqno = safe_int(request.args.get("seqno"))
         
-        if start and end and meat_value:
-            timeseries_data = get_timeseries_of_cattle_data(db_session, start, end, meat_value)
+        if start and end and meat_value and seqno is not None:
+            timeseries_data = get_timeseries_of_cattle_data(db_session, start, end, meat_value, seqno)
             return jsonify(timeseries_data), 200
         else:
             return jsonify("Invalid parameter"), 400

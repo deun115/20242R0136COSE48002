@@ -1,4 +1,7 @@
 # DB Model Config File
+import time
+from flask import g, request
+from prometheus_client import Counter, Histogram, multiprocess, generate_latest, CollectorRegistry
 from sqlalchemy import (
     Column,
     Integer,
@@ -12,7 +15,7 @@ from sqlalchemy import (
 )
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.orm import relationship, scoped_session, sessionmaker
+from sqlalchemy.orm import relationship, scoped_session, sessionmaker, validates
 
 from utils import *
 
@@ -43,7 +46,39 @@ def initialize_db(app):
         raise
     else:
         print("Connect DB OKAY")
-    # 6. db_session을 반환해 DB 세션 관리
+        
+    # Prometheus 메트릭 설정
+    REQUEST_COUNT = Counter('flask_app_request_count', 'App Request Count', ['method', 'endpoint'])
+    REQUEST_LATENCY = Histogram('flask_app_request_latency_seconds', 'Request latency', ['method', 'endpoint'])
+
+    # 6. 요청 전 세션 초기화 및 시작 시간 기록
+    @app.before_request
+    def before_request():
+        g.start_time = time.time()  # Record start time
+        db_session()
+
+    # 7. 요청 후 메트릭 수집 및 세션 종료 관리
+    @app.after_request
+    def after_request(response):
+        if hasattr(g, 'start_time'):
+            latency = time.time() - g.start_time
+            REQUEST_LATENCY.labels(method=request.method, endpoint=request.path).observe(latency)
+        REQUEST_COUNT.labels(method=request.method, endpoint=request.path).inc()
+        return response
+
+    @app.teardown_appcontext
+    def shutdown_session(exception=None):
+        db_session.remove()
+
+    # 8. Prometheus 멀티프로세싱 지원을 위한 메트릭 엔드포인트 설정
+    def prometheus_metrics():
+        registry = CollectorRegistry()
+        multiprocess.MultiProcessCollector(registry)
+        return generate_latest(registry)
+
+    app.add_url_rule('/metrics', 'metrics', prometheus_metrics)
+    
+    # 9. db_session을 반환해 DB 세션 관리
     return db_session
 
 
@@ -250,6 +285,7 @@ class Meat(Base):
 
     # 2. 육류 Open API 정보
     createdAt = Column(DateTime, nullable=False)  # 육류 관리번호 생성 시간
+    updatedAt = Column(DateTime) # 대기 중인 상태에서 반려한 시간
     traceNum = Column(String(255), nullable=False)  # 이력번호(혹은 묶은 번호)
     farmAddr = Column(String(255))  # 농장 주소
     farmerName = Column(String(255))  # 농장주 이름
@@ -293,6 +329,7 @@ class DeepAgingInfo(Base):
         primary_key=True,
     )  # 육류 관리번호
     seqno = Column(Integer, primary_key=True)  # 가공 횟수
+    isCompleted = Column(Integer, server_default='0')
     __table_args__ = (
         PrimaryKeyConstraint("id", "seqno"),
         ForeignKeyConstraint(
@@ -414,7 +451,7 @@ class HeatedmeatSensoryEval(Base):
     # 3. 관능검사 측정 데이터
     flavor = Column(Float)
     juiciness = Column(Float)
-    tenderness = Column(Float)
+    tenderness = Column(JSONB)
     umami = Column(Float)
     palatability = Column(Float)
     
@@ -435,10 +472,27 @@ class HeatedmeatSensoryEval(Base):
         CheckConstraint('"period" >= 0', name="check_period_value"),
         CheckConstraint('"flavor" >= 1 and "flavor" <= 10', name="check_flavor_stat"),
         CheckConstraint('"juiciness" >= 1 and "juiciness" <= 10', name="check_juiciness_stat"),
-        CheckConstraint('"tenderness" >= 1 and "tenderness" <= 10', name="check_tenderness_stat"),
         CheckConstraint('"umami" >= 1 and "umami" <= 10', name="check_umami_stat"),
         CheckConstraint('"palatability" >= 1 and "palatability" <= 10', name="check_palatability_stat")
     )
+    
+    @validates('tenderness')
+    def validate_tenderness(self, key, value):
+        required_keys = {'0', '3', '7', '14', '21'}
+        if not isinstance(value, dict):
+            raise ValueError("Tenderness must be a JSON object")
+        
+        keys = set(value.keys())
+        if not keys.issubset(required_keys):
+            raise ValueError(f"Invalid keys in tenderness: {keys - required_keys}")
+        
+        for k, v in value.items():
+            if not isinstance(v, (int, float)):
+                raise ValueError(f"Tenderness value for key {k} must be a number")
+            if not (1 <= v <= 10):
+                raise ValueError(f"Tenderness value for key {k} must be between 1 and 10")
+        
+        return value
 
 
 class AI_HeatedmeatSeonsoryEval(Base):
@@ -454,7 +508,7 @@ class AI_HeatedmeatSeonsoryEval(Base):
     # 3. 관능검사 AI 예측 데이터
     flavor = Column(Float)
     juiciness = Column(Float)
-    tenderness = Column(Float)
+    tenderness = Column(JSONB)
     umami = Column(Float)
     palatability = Column(Float)
     
@@ -468,10 +522,27 @@ class AI_HeatedmeatSeonsoryEval(Base):
         ),
         CheckConstraint('"flavor" >= 1 and "flavor" <= 10', name="check_flavor_stat"),
         CheckConstraint('"juiciness" >= 1 and "juiciness" <= 10', name="check_juiciness_stat"),
-        CheckConstraint('"tenderness" >= 1 and "tenderness" <= 10', name="check_tenderness_stat"),
         CheckConstraint('"umami" >= 1 and "umami" <= 10', name="check_umami_stat"),
         CheckConstraint('"palatability" >= 1 and "palatability" <= 10', name="check_palatability_stat")
     )
+    
+    @validates('tenderness')
+    def validate_tenderness(self, key, value):
+        required_keys = {'0', '3', '7', '14', '21'}
+        if not isinstance(value, dict):
+            raise ValueError("Tenderness must be a JSON object")
+        
+        keys = set(value.keys())
+        if not keys.issubset(required_keys):
+            raise ValueError(f"Invalid keys in tenderness: {keys - required_keys}")
+        
+        for k, v in value.items():
+            if not isinstance(v, (int, float)):
+                raise ValueError(f"Tenderness value for key {k} must be a number")
+            if not (1 <= v <= 10):
+                raise ValueError(f"Tenderness value for key {k} must be between 1 and 10")
+        
+        return value
 
 
 class ProbexptData(Base):
@@ -548,6 +619,7 @@ class OpenCVImagesInfo(Base):
     fat_palette = Column(JSONB)
     protein_palette = Column(JSONB)
     protein_rate = Column(Float)
+    fat_rate = Column(Float)
     
     # 4. 학습에 필요한 이미지 URL JSONB
     lbp_images = Column(JSONB)
@@ -571,6 +643,7 @@ class OpenCVImagesInfo(Base):
             onupdate="CASCADE"
         ),
         CheckConstraint('"protein_rate" >= 0 and "protein_rate" <= 100', name="check_protein_rate"),
+        CheckConstraint('"fat_rate" >= 0 and "fat_rate" <= 100', name="check_fat_rate"),
         CheckConstraint('"contrast" >= 0', name="check_texture_contrast"),
         CheckConstraint('"dissimilarity" >= 0', name="check_texture_dissimilarity"),
         CheckConstraint('"homogeneity" >= 0', name="check_texture_homogeneity"),
