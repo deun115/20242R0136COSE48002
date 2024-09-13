@@ -7,7 +7,8 @@ import 'package:structure/model/user_model.dart';
 
 class UserDetailViewModel with ChangeNotifier {
   UserModel userModel;
-  UserDetailViewModel(this.userModel) {
+  BuildContext context;
+  UserDetailViewModel(this.userModel, this.context) {
     _initialize();
   }
   bool isLoading = false;
@@ -87,11 +88,13 @@ class UserDetailViewModel with ChangeNotifier {
     try {
       // 데이터 전송
       final response = await RemoteDataSource.updateUser(userModel.toJson());
+      print("--------");
+      print(userModel.toJson());
       if (response == 200) {
         if (context.mounted) {
           isLoading = false;
           notifyListeners();
-
+          // print("200성공");
           showSuccessChangeUserInfo(context, () {
             Navigator.of(context).pop();
             Navigator.of(context).pop();
@@ -102,7 +105,9 @@ class UserDetailViewModel with ChangeNotifier {
       }
     } catch (e) {
       debugPrint('Error: $e');
-      if (context.mounted) showErrorPopup(context);
+      // if (context.mounted) showErrorPopup(context);
+
+      if (context.mounted) showErrorPopup(context, error: e.toString());
     }
   }
 
