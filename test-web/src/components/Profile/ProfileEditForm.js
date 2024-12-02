@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { CircularProgress } from '@mui/material';
-import { userUpdate } from '../../API/user/userUpdate';
+import { userUpdate } from '../../shared/api/userUpdate';
 import { format } from 'date-fns';
 
 const navy = '#0F3659';

@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Tabs, Tab, Box } from '@mui/material';
 import { Select, MenuItem } from '@mui/material';
-import TasteTime from './Charts/Time/TasteTime';
-import CorrelationChart from './Charts/Corr/CorrelationChart';
-import HeatMapChart from './Charts/HeatMap/HeatMapChart';
-import BoxPlotChart from './Charts/BoxPlot/BoxPlotChart';
+import TasteTime from './StatsTabs/Time/TasteTime';
+import CorrelationChart from './StatsTabs/Corr/CorrelationChart';
+import HeatMapChart from './StatsTabs/HeatMap/HeatMapChart';
+import BoxPlotChart from './StatsTabs/BoxPlot/BoxPlotChart';
 
 const CustomTabPanel = (props) => {
   const { children, value, index, ...other } = props;

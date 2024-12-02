@@ -1,21 +1,21 @@
 import { Helmet } from 'react-helmet';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-import LogIn from './routes/LogIn';
-import Home from './routes/Home';
-import Dashboard from './routes/Dashboard';
-import Stats from './routes/Stats';
-import PA from './routes/PA';
-import Profile from './routes/Profile';
-import DataEdit from './routes/DataEdit';
-import UserManagement from './routes/UserManagement';
-import DataConfirm from './routes/DataConfirm';
-import DataPredict from './routes/DataPredict';
+import LogIn from './components/LogIn/routes/LogIn';
+import Home from './components/Home/routes/Home';
+import Dashboard from './components/DataListView/routes/Dashboard';
+import Stats from './components/Stats/routes/Stats';
+import PA from './components/DataListView/routes/PA';
+import Profile from './components/Profile/routes/Profile';
+import DataEdit from './components/DataDetailPage/routes/DataEdit';
+import UserManagement from './components/UserManagement/routes/UserManagement';
+import DataConfirm from './components/DataDetailPage/routes/DataConfirm';
+import DataPredict from './components/DataDetailPage/routes/DataPredict';
 
-import { UserProvider } from './Utils/UserContext';
+import { UserProvider } from './shared/Utils/UserContext';
 
 import Box from '@mui/material/Box';
-import MainWidgetBars from './components/Base/WidgetBars/MainWidgetBars';
+import WidgetBars from './components/Widget/WidgetBars';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 const defaultTheme = createTheme();
 
@@ -94,7 +94,7 @@ function App() {
                       <LogIn />
                     ) : (
                       <Box sx={{ display: 'flex' }}>
-                        <MainWidgetBars />
+                        <WidgetBars />
                         <Box
                           component="main"
                           sx={{

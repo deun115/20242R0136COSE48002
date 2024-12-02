@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { TextField, IconButton, Box } from '@mui/material';
-import { getByPartialMeatId } from '../../API/get/getByPartialMeatId';
+import { getByPartialMeatId } from './api/get/getByPartialMeatId';
 const SearchById = ({
   onDataFetch,
   onValueChange,

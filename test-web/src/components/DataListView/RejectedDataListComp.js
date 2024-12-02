@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Box, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import DataList from './DataList';
+import DataList from './ListComp/DataList';
 import Spinner from 'react-bootstrap/Spinner';
-import Pagination from './Children/Pagination';
-import { useRejectedMeatList } from '../../API/get/getRejectedMeatListSWR';
+import Pagination from './ListComp/Pagination';
+import { useRejectedMeatList } from './api/get/getRejectedMeatListSWR';
 import style from './style/rejecteddatalistcompstyle';
 
 // 반려 데이터 목록 컴포넌트

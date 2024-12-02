@@ -13,19 +13,19 @@ import { DataGrid } from '@mui/x-data-grid';
 import SearchIcon from '@mui/icons-material/Search';
 import { IoMdPersonAdd } from 'react-icons/io';
 
-import CustomSnackbar from '../Base/CustomSnackbar';
+import CustomSnackbar from '../../shared/components/CustomSnackbar';
 
-import DeleteConfirmationModal from './Childeren/DeleteConfirmationModal';
-import UserRegisterModal from './Childeren/UserRegisterModal';
+import DeleteConfirmationModal from './UserMangementField/DeleteConfirmationModal';
+import UserRegisterModal from './UserMangementField/UserRegisterModal';
 
-import handleUserDelete from './Childeren/handleUserDelete';
-import handleUserSearch from './Childeren/handleUserSearch';
+import handleUserDelete from './UserMangementField/handleUserDelete';
+import handleUserSearch from './UserMangementField/handleUserSearch';
 
-import { useUser } from '../../Utils/UserContext';
-import { userList } from '../../API/user/userList';
-import UserTable from './Childeren/UserTable';
+import { useUser } from '../../shared/Utils/UserContext';
+import { userList } from './api/userList';
+import UserTable from './UserMangementField/UserTable';
 
-const UserList = () => {
+const UserMangementField = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   // const [editShow, setEditShow] = useState(false);
@@ -291,4 +291,4 @@ const UserList = () => {
   );
 };
 
-export default UserList;
+export default UserMangementField;

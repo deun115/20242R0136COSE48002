@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import DataView from './DataView';
-import DataPAView from './DataPAView';
-import DataConfirmView from './DataConfirmView';
-import dataProcessing from './dataProcessing';
+import DataView from './DetailDataController/DataView';
+import DataPAView from './DetailDataController/DataPAView';
+import DataConfirmView from './DetailDataController/DataConfirmView';
+import dataProcessing from './DetailDataController/dataProcessing';
 import Spinner from 'react-bootstrap/Spinner';
-import { useDetailMeatData } from '../../API/get/getDetailMeatDataSWR';
+import { useDetailMeatData } from './api/get/getDetailMeatDataSWR';
 
 //하나의 관리번호에 대한 육류 상세 데이터를 API로 부터 fetch
 const DataLoad = ({ id, page }) => {

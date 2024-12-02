@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box } from '@mui/material';
 import Spinner from 'react-bootstrap/Spinner';
-import DataList from './DataList';
+import DataList from './ListComp/DataList';
 import style from './style/pasearcheddatastyle';
 
 const PASearchedDataListComp = ({ startDate, endDate, searchedData }) => {

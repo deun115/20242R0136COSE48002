@@ -6,7 +6,7 @@ import {
   signInWithEmailAndPassword,
 } from 'firebase/auth';
 // import { auth } from '../../firebase-config';
-import { useUser, useSetUser } from '../../Utils/UserContext';
+import { useUser, useSetUser } from '../../shared/Utils/UserContext';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
@@ -16,7 +16,7 @@ import Checkbox from '@mui/material/Checkbox';
 import Typography from '@mui/material/Typography';
 import layer_1 from '../../src_assets/layer_1.png';
 import background from '../../src_assets/background.png';
-import { userIsLogin } from '../../API/user/userIsLogin';
+import { userIsLogin } from './api/userIsLogin';
 
 const defaultTheme = createTheme();
 

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import { Box, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import DataList from './DataList';
-import Pagination from './Children/Pagination';
+import DataList from './ListComp/DataList';
+import Pagination from './ListComp/Pagination';
 import Spinner from 'react-bootstrap/Spinner';
-import { usePredictedMeatList } from '../../API/get/getPredictedMeatListSWR';
+import { usePredictedMeatList } from './api/get/getPredictedMeatListSWR';
 import style from './style/padatalistcompstyle';
 
 // 데이터 예측 페이지 목록 컴포넌트
