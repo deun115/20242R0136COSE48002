@@ -7,9 +7,40 @@ import 'package:onnxruntime/onnxruntime.dart';
 
 class HomeViewModel with ChangeNotifier {
   BuildContext context;
-  HomeViewModel({required this.context});
+  HomeViewModel({required this.context}) {
+    _initialize();
+  }
 
   XFile? file;
+
+  Stopwatch stopwatch = Stopwatch();
+  List<double> predictions = [0, 0, 0, 0, 0];
+  int elapsedTime = 0;
+  int modelLoadtime = 0;
+
+  late OrtSession session;
+
+  void _initialize() async {
+    await loadModel();
+  }
+
+  Future<void> loadModel() async {
+    stopwatch.start();
+    OrtEnv.instance.init();
+
+    final sessionOptions = OrtSessionOptions();
+    const assetFileName = 'assets/mobilenet.onnx';
+    final rawAssetFile = await rootBundle.load(assetFileName);
+    final bytes = rawAssetFile.buffer.asUint8List();
+    session = OrtSession.fromBuffer(bytes, sessionOptions);
+
+    stopwatch.stop();
+    modelLoadtime = stopwatch.elapsed.inMilliseconds;
+    debugPrint('Done loading model');
+
+    stopwatch.reset();
+    notifyListeners();
+  }
 
   Future<void> pickImage() async {
     final img = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -84,16 +115,7 @@ class HomeViewModel with ChangeNotifier {
 
   void classification() async {
     if (file != null) {
-      // Initialize the ONNX runtime environment
-      OrtEnv.instance.init();
-
-      final sessionOptions = OrtSessionOptions();
-      const assetFileName = 'assets/mobilenet.onnx';
-      final rawAssetFile = await rootBundle.load(assetFileName);
-      final bytes = rawAssetFile.buffer.asUint8List();
-      final session = OrtSession.fromBuffer(bytes, sessionOptions);
-
-      debugPrint('Done loading model');
+      stopwatch.start();
 
       // 이미지 전처리
       final inputData = await preprocessImage();
@@ -103,13 +125,16 @@ class HomeViewModel with ChangeNotifier {
       final inputOrt =
           OrtValueTensor.createTensorWithDataList(inputData, shape);
 
-      // print(inputOrt.value);
-
       final inputs = {'input': inputOrt};
       final runOptions = OrtRunOptions();
 
       // 모델 실행
       final outputs = await session.runAsync(runOptions, inputs);
+
+      stopwatch.stop();
+      elapsedTime = stopwatch.elapsed.inMilliseconds;
+
+      stopwatch.reset();
 
       // 자원 해제
       inputOrt.release();
@@ -120,22 +145,30 @@ class HomeViewModel with ChangeNotifier {
         final outputTensor = outputs[0];
         final outputData = outputTensor?.value as List<List<double>>;
 
-        debugPrint('Prediction Output:');
-        for (int i = 0; i < outputData.length; i++) {
-          debugPrint('Class $i: ${outputData[i]}');
-        }
+        predictions = outputData[0];
+        notifyListeners();
+
+        debugPrint('Done predicting');
       }
 
       outputs?.forEach((element) {
         element?.release();
       });
 
-      session.release();
+      // session.release();
     } else {
       debugPrint('Choose image first');
     }
   }
+
+  /// 모델 해제
+  void releaseModel() {
+    session.release();
+    debugPrint('Model released');
+  }
 }
+
+// 이미지 전처리 
 
 // val_transform = transforms.Compose([
 //     transforms.Resize(image_resize),
@@ -148,15 +181,3 @@ class HomeViewModel with ChangeNotifier {
 // input_size = 224
 // mean=[0.4834, 0.3656, 0.3474]
 // std=[0.2097, 0.2518, 0.2559]
-
-// 7 10 7 4 7
-// 8 6 6 5 8
-// 9 8 6 4 9
-// 8 6 7 4 8
-// 3 6 7 4 3 
-
-// [3.6071507930755615, 9.333674430847168, 6.774637699127197, 5.032243251800537, 4.494431495666504]
-// [5.255207061767578, 8.121795654296875, 5.39682674407959, 4.193216800689697, 5.803882122039795]
-// [7.154209613800049, 7.507527828216553, 5.111659049987793, 4.869064807891846, 6.844488143920898]
-// [4.132011413574219, 9.010075569152832, 6.3419270515441895, 5.202378273010254, 4.89251184463501]
-// [2.446580171585083, 7.696757793426514, 5.872425556182861, 4.514078617095947, 3.559058427810669]
