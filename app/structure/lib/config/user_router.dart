@@ -80,6 +80,27 @@ class UserRouter {
   static GoRouter getRouter(MeatModel meatModel, UserModel userModel) {
     return GoRouter(
       initialLocation: '/sign-in',
+      redirect: (context, state) {
+        // 자동 로그인이 설정되어있지 않으면 로그인 화면으로 이동
+        if (userModel.userId == null) {
+          // 회원가입, 비밀번호 변경, 비밀번호 변경 완료, 회원가입 완료 페이지로 이동은 허용
+          if (state.fullPath == '/sign-in/sign-up' ||
+              state.fullPath == '/sign-in/sign-up/user-detail' ||
+              state.fullPath == '/sign-in/password_reset' ||
+              state.fullPath == '/sign-in/complete_password_reset' ||
+              state.fullPath == '/sign-in/complete-sign-up') {
+            return null;
+          }
+
+          return '/sign-in';
+        } else if (state.fullPath == '/sign-in') {
+          // 로그인 화면에서 자동 로그인 설정시 home으로 이동
+          return '/home';
+        } else {
+          // 그 외 나머지 화면은 모두 허용
+          return null;
+        }
+      },
       routes: [
         // 로그인
         GoRoute(

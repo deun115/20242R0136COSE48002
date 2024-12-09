@@ -17,13 +17,6 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   @override
-  void initState() {
-    super.initState();
-    // Future.delayed(Duration.zero, () {});
-    context.read<SignInViewModel>().autoLoginCheck(context);
-  }
-
-  @override
   Widget build(BuildContext context) {
     SignInViewModel signInViewModel = context.watch<SignInViewModel>();
 

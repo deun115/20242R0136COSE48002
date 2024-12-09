@@ -24,12 +24,6 @@ class SignInViewModel with ChangeNotifier {
   bool isLoading = false;
   bool isAutoLogin = false;
 
-  void autoLoginCheck(BuildContext context) {
-    if (userModel.auto) {
-      context.go('/home');
-    }
-  }
-
   final formKey = GlobalKey<FormState>();
 
   // firbase authentic

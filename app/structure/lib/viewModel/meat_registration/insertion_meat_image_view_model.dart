@@ -191,20 +191,20 @@ class InsertionMeatImageViewModel with ChangeNotifier {
         // 이미지 업로드 먼저
         await _sendImageToFirebase();
 
+        // openCV는 실패 상황에 대한 예외처리를 하지 않음
         dynamic response;
-        dynamic responseOpencv;
         if (isRaw) {
           // 처리육
           if (isPost) {
             response = await RemoteDataSource.createMeatData(
                 'sensory-eval', meatModel.toJsonSensory());
-            responseOpencv = await RemoteDataSource.postMeatImage(
+            await RemoteDataSource.postMeatImage(
                 meatModel.meatId, meatModel.seqno);
           } else {
             // 처리육 patch
             response = await RemoteDataSource.patchMeatData(
                 'sensory-eval', meatModel.toJsonSensory());
-            responseOpencv = await RemoteDataSource.patchMeatImage(
+            await RemoteDataSource.patchMeatImage(
                 meatModel.meatId, meatModel.seqno);
           }
         } else {
@@ -218,7 +218,7 @@ class InsertionMeatImageViewModel with ChangeNotifier {
           }
         }
 
-        if (response == 200 && responseOpencv == 200) {
+        if (response == 200) {
           if (isRaw) {
             meatModel.updateSeonsory();
           } else {
