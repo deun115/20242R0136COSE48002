@@ -2,13 +2,6 @@
 
 ![logo](./images/logo.png)
 
-> 성균관대학교 산학협력프로젝트 딥플랜트1 Mobile Application
-> 개발기간: 2023.03 ~ 2023.12
->
-> Built with Flutter.
-
-
-
 ## Table of Contents
 
 - [Introduction](#Introduction)
@@ -48,23 +41,40 @@ A few ot the things you can do with DeepAging:
 
 |                   Sign in                    |                   Sign up                    |                   Home                    |                   My page                    |
 | :------------------------------------------: | :------------------------------------------: | :---------------------------------------: | :------------------------------------------: |
-| <img src="./images/sign-in.png" width="200"> | <img src="./images/sign-up.png" width="200"> | <img src="./images/home.png" width="200"> | <img src="./images/my-page.png" width="200"> |
+| <img src="https://github.com/user-attachments/assets/0721e5b8-4aad-4e03-a9f6-afdf3d685099" width="200"> | <img src="https://github.com/user-attachments/assets/32e73817-0019-457e-b475-a6b3fd64f0e0" width="200"> | <img src="https://github.com/user-attachments/assets/8f7d3694-4a76-42b4-9432-5b35c41adb8c" width="200"> | <img src="https://github.com/user-attachments/assets/477edc85-73a5-4aaa-8c46-99b97be00fcc" width="200"> |
+
+
+
 
 <table>
   <tr>
     <th colspan="4" style="text-align: center;">Meat registration</td>
   </tr>
   <tr>
-    <td><img src="./images/meat-regi-1.png" width=200></td>
-		<td><img src="./images/meat-regi-2.png" width=200></td>
-    <td><img src="./images/meat-regi-3.png" width=200></td>
-    <td><img src="./images/meat-regi-4.png" width=200></td>
+    <td><img src="https://github.com/user-attachments/assets/761e300a-052f-4b29-aa60-d0d82b51940a" width=200></td>
+		<td><img src="https://github.com/user-attachments/assets/f74e202a-f07b-470f-8ecd-41236e91005d" width=200></td>
+    <td><img src="https://github.com/user-attachments/assets/171a6e4c-6e3b-4700-af78-a5c4dd7ae1e4" width=200></td>
+    <td><img src="https://github.com/user-attachments/assets/d15809f3-4c43-4ad3-90c0-3e6d77208f9b" width=200></td>
+  </tr>
+</table>
+
+
+
+<table>
+  <tr>
+    <th colspan="4" style="text-align: center;">Data management(Normal)</td>
+  </tr>
+  <tr>
+    <td><img src="./images/data-mng-1.png" width=200></td>
+		<td><img src="./images/data-mng-2.png" width=200></td>
+    <td><img src="./images/data-mng-3.png" width=200></td>
+    <td><img src="./images/data-mng-4.png" width=200></td>
   </tr>
 </table>
 
 <table>
   <tr>
-    <th colspan="4" style="text-align: center;">Data management</td>
+    <th colspan="4" style="text-align: center;">Data management(Researcher/Manager)</td>
   </tr>
   <tr>
     <td><img src="./images/data-mng-1.png" width=200></td>
