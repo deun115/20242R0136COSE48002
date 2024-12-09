@@ -40,6 +40,22 @@ class _HomeViewState extends State<HomeView> {
             onPressed: homeViewModel.classification,
             child: const Text("Evaluate"),
           ),
+          const SizedBox(height: 8),
+
+          // 예측 결과
+          Text('Model Load time: ${homeViewModel.modelLoadtime} ms'),
+          Text('Elapsed time: ${homeViewModel.elapsedTime} ms'),
+          Text('마블링: ${homeViewModel.predictions[0].toStringAsFixed(2)}'),
+          Text('색: ${homeViewModel.predictions[1].toStringAsFixed(2)}'),
+          Text('텍스쳐: ${homeViewModel.predictions[2].toStringAsFixed(2)}'),
+          Text('육즙: ${homeViewModel.predictions[3].toStringAsFixed(2)}'),
+          Text('기호도: ${homeViewModel.predictions[4].toStringAsFixed(2)}'),
+          const SizedBox(height: 8),
+
+          ElevatedButton(
+            onPressed: homeViewModel.releaseModel,
+            child: const Text("Release"),
+          ),
         ],
       ),
     );
