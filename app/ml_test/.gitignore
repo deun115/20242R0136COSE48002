@@ -43,4 +43,4 @@ app.*.map.json
 /android/app/release
 
 # Model
-/assets/*.onnx
+# /assets/*.onnx
