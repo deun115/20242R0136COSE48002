@@ -11,19 +11,21 @@ class HomeViewModel with ChangeNotifier {
     _initialize();
   }
 
-  XFile? file;
+  XFile? file; // 이미지 파ㄹ
 
-  Stopwatch stopwatch = Stopwatch();
-  List<double> predictions = [0, 0, 0, 0, 0];
+  Stopwatch stopwatch = Stopwatch(); // latency 측정을 위한 타이머
   int elapsedTime = 0;
   int modelLoadtime = 0;
 
-  late OrtSession session;
+  List<double> predictions = [0, 0, 0, 0, 0]; // 예측 결과
+
+  late OrtSession session; // 모델 세션
 
   void _initialize() async {
     await loadModel();
   }
 
+  /// 모델 로드 함수
   Future<void> loadModel() async {
     stopwatch.start();
     OrtEnv.instance.init();
@@ -42,13 +44,14 @@ class HomeViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  /// 갤러리에서 이미지 불러오기
   Future<void> pickImage() async {
     final img = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (img != null) file = img;
     notifyListeners();
   }
 
-  // 함수: XFile 이미지 처리
+  // 함수: XFile 이미지 전처리
   Future<Float32List> preprocessImage() async {
     const int resize = 256;
     const int cropSize = 224;
@@ -62,6 +65,7 @@ class HomeViewModel with ChangeNotifier {
       throw Exception("이미지를 디코딩할 수 없습니다.");
     }
 
+    // 이미지 리사이즈시 비율 맞추기 위한 계산
     int newWidth, newHeight;
     final double aspectRatio = decodedImage.width / decodedImage.height;
 
@@ -73,9 +77,11 @@ class HomeViewModel with ChangeNotifier {
       newWidth = (resize * aspectRatio).round();
     }
 
+    // 이미지 리사이즈
     final img.Image resizedImage =
         img.copyResize(decodedImage, width: newWidth, height: newHeight);
 
+    // 중앙 픽셀 크롭
     int xOffset = (resizedImage.width - cropSize) ~/ 2;
     int yOffset = (resizedImage.height - cropSize) ~/ 2;
     img.Image croppedImage = img.copyCrop(
@@ -86,6 +92,7 @@ class HomeViewModel with ChangeNotifier {
       height: cropSize,
     );
 
+    // Normalization
     List<int> rawPixels = croppedImage.getBytes(order: img.ChannelOrder.rgb);
     Float32List tensor = Float32List(cropSize * cropSize * 3);
 
@@ -113,6 +120,7 @@ class HomeViewModel with ChangeNotifier {
     return rearrangedTensor;
   }
 
+  // 모델 예측
   void classification() async {
     if (file != null) {
       stopwatch.start();
@@ -120,7 +128,7 @@ class HomeViewModel with ChangeNotifier {
       // 이미지 전처리
       final inputData = await preprocessImage();
 
-      // // ONNX Runtime 입력 생성
+      // ONNX Runtime 입력 생성
       final shape = [1, 3, 224, 224];
       final inputOrt =
           OrtValueTensor.createTensorWithDataList(inputData, shape);
@@ -168,7 +176,7 @@ class HomeViewModel with ChangeNotifier {
   }
 }
 
-// 이미지 전처리 
+// 이미지 전처리 pytorch
 
 // val_transform = transforms.Compose([
 //     transforms.Resize(image_resize),
