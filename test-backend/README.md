@@ -180,8 +180,8 @@
 
 ## 서버 개발자
 
-| 양은서 (Eunseo Yan) | | 이원준 (Wonjun Lee) |
-| :-------------------------------------------------------------------------------------------------: | | :-----------------------------------------------------------------------------------------------: |
-| <img width="160px" src="https://avatars.githubusercontent.com/u/141890722?v=4" alt="Eunseo Yang" /> | | <img width="160px" src="https://avatars.githubusercontent.com/u/97330728?v=4" alt="Wonjun Lee" /> |
-| [GitHub: @deun115](https://github.com/deun115) | | [GitHub: @wonjuneee](https://github.com/wonjuneee) |
-| 고려대학교 컴퓨터학과 4학년 | | 고려대학교 컴퓨터학과 3학년 |
+|                                         양은서 (Eunseo Yan)                                         |                                        이원준 (Wonjun Lee)                                        |
+| :-------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: |
+| <img width="160px" src="https://avatars.githubusercontent.com/u/141890722?v=4" alt="Eunseo Yang" /> | <img width="160px" src="https://avatars.githubusercontent.com/u/97330728?v=4" alt="Wonjun Lee" /> |
+|                           [GitHub: @deun115](https://github.com/deun115)                            |                        [GitHub: @wonjuneee](https://github.com/wonjuneee)                         |
+|                                     고려대학교 컴퓨터학과 4학년                                     |                                    고려대학교 컴퓨터학과 4학년                                    |
