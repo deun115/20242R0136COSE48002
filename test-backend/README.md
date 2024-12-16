@@ -26,7 +26,7 @@
 ![Amazone RDS](https://img.shields.io/badge/Amazon%20RDS-527FFF?style=for-the-badge&logo=amazon-rds&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=Docker&logoColor=white)
 ![Github Action](https://img.shields.io/badge/GitHub%20Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
-![Grafana](htpps://img.shields.io/badge/Grafana-#F46800?style=for-the-badge&logo=grafana&logoColor=white)
+![Grafana](https://img.shields.io/badge/grafana-%23F46800.svg?style=for-the-badge&logo=grafana&logoColor=white)
 
 ### Development
 
@@ -180,8 +180,8 @@
 
 ## 서버 개발자
 
-|                                         양은서 (Eunseo Yan)                                         |                                        이원준 (Wonjun Lee)                                        |
+|                                        양은서 (Eunseo Yang)                                         |                                        이원준 (Wonjun Lee)                                        |
 | :-------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------: |
 | <img width="160px" src="https://avatars.githubusercontent.com/u/141890722?v=4" alt="Eunseo Yang" /> | <img width="160px" src="https://avatars.githubusercontent.com/u/97330728?v=4" alt="Wonjun Lee" /> |
 |                           [GitHub: @deun115](https://github.com/deun115)                            |                        [GitHub: @wonjuneee](https://github.com/wonjuneee)                         |
-|                                     고려대학교 컴퓨터학과 4학년                                     |                                    고려대학교 컴퓨터학과 4학년                                    |
+|                                     고려대학교 컴퓨터학과 4학년                                     |                                    고려대학교 컴퓨터학과 3학년                                    |
