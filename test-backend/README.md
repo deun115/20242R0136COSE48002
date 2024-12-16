@@ -51,58 +51,46 @@
 
 1. AWS_ACCESS_KEY_ID
 
-   - AWS IAM Public Key
+   - AWS Access 공개키
+   - S3 storage 접근용
 
 2. AWS_SECRET_ACCESS_KEY
 
-   - AWS IAM Secret key
+   - AWS Access 비밀키
+   - S3 storage 접근용
 
-3. SSH_PRIVATE_KEY
+3. DB_URI
 
-   - AWS EC2 Access Pem File
+   - Database 엔진 주소
 
-4. DB_URI
+4. APPLICATION_NAME
 
-   - AWS RDS Public URI
+   - CodeDeploy를 활용한 배포 시 필요한 애플리케이션명
 
-5. DOCKER_HUB_ACCESS_TOKEN
+5. DEPLOYMENT_GROUP
 
-   - Docker 이미지 백업용 Access Tocken
+   - CodeDeploy를 활용한 배포 시 필요한 배포 그룹명
 
-6. DOCKER_HUB_USERNAME
+6. S3_BUCKET_NAME
 
-   - Docker 이미지 백업용 유저 아이디
+   - AWS S3 System Storage Bucket Name
 
-7. S3_BUCKET_NAME
+7. S3_REGION_NAME
 
-   - S3 Buckt Name
+   - AWS S3 region Name
+   - e.g., ap-northeast-2
 
-8. S3_REGION_NAME
+8. FIREBASE_BUCKET_ADDRESS
 
-   - S3 스토리지 영역
+   - Google Firebase Storage Bucket Address
 
-9. FIREBASE_BUCKET_ADDRESS
+9. SERVICEACCOUNTKEY
 
-   - Google Firebase Storage 주소
-
-10. ML_SERVER_BASER_URL
-
-    - ML 서버 퍼블릭 IP:port
-
-11. SERVICE_ACCOUNT_KEY
-
-    - FIREBASE Secret Key
-
-12. EC2_HOST
-
-    - 서버 구현 EC2 인스턴스 주소
-
-13. EC2_USERNAME
-    - EC2 계정 유저명
+   - Google serviceAccountKey.json 파일(python용)
 
 ## Server 로컬 실행
 
-1. cd backend/
+1. cd test-flask/
 
 2. docker ps -al
 
