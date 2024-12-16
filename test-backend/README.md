@@ -7,7 +7,7 @@
 
 > 고려대학교 산학협력프로젝트 딥플랜트
 >
-> 개발기간: 2024.05 ~ 2023.12
+> 개발기간: 2024.05 ~ 2024.12
 >
 > Built with Python
 
@@ -41,7 +41,7 @@
 
 ## Production 배포 방법
 
-1. git repositoy clone
+1. git repository clone
 
 2. [환경 변수 및 Secret 변수 설정]
 
@@ -89,21 +89,28 @@
    - Google serviceAccountKey.json 파일(python용)
 
 ## Server 로컬 실행
+### 1) Docker-Compose로 실행하기
 
 1. cd test-flask/
-
-2. docker ps -al
-
-   - 상태 확인
-
-3. sudo docker-compose build
-
-4. docker images
-
-   - 이미지 확인(Compose 파일 묶음)
-
-5. sudo docker-compose up-d
-   - docker compose container 구현
+   - docker-compose.yml 파일이 위치한 경로로 이동
+2. docker ps
+3. docker compose version
+   - 도커와 도커 컴포즈 설치 여부 확인
+4. ``sudo docker-compose up-d``
+   - docker compose build 및 실행
+  
+### 2) 가상환경을 통해 로컬에서 실행하기
+1. ``python3 -m venv venv``
+2. ``source venv/bin/activate``
+     - 가상환경 생성 및 실행
+4. cd test-backend/
+5. ``docker run -d -p 5000:5000 --name mlflow-server ghcr.io/mlflow/mlflow``
+     - 공식 도커 이미지를 활용하여 mlflow 서버 키기
+6. ``pip install -r requirements-dev.txt``
+     - 서버 실행에 필요한 파이썬 패키지 설치
+8. ``gunicorn --bind 0.0.0.0:8080 --workers 2 --timeout 600 app:app``
+     - flask 서버 실행
+     - 만약 터미널에서 로그 확인하고 싶다면 ``--log-level [info|debug]`` argument 추가
 
 ## Server Architecture
 
