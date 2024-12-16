@@ -104,7 +104,7 @@
 2. ``source venv/bin/activate``
      - 가상환경 생성 및 실행
 4. cd test-backend/
-5. ``docker run -d -p 5000:5000 --name mlflow-server ghcr.io/mlflow/mlflow``
+5. ``docker run -d -p 5000:5000 --name mlflow-server ghcr.io/mlflow/mlflow mlflow server --host 0.0.0.0``
      - 공식 도커 이미지를 활용하여 mlflow 서버 키기
 6. ``pip install -r requirements-dev.txt``
      - 서버 실행에 필요한 파이썬 패키지 설치
