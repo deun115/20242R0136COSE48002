@@ -2,7 +2,10 @@
 
 ![logo](https://github.com/user-attachments/assets/dd386089-3aa5-42de-852c-88f1e8b78039)
 ## 프로젝트 소개
-육류 및 유저 데이터의 조회/입력/수정/통계/예측 등 관리 및 조회가 가능한 어드민 페이지입니다.
+![ｈｏｍｅ](https://github.com/user-attachments/assets/06083c08-2898-4e8e-9f08-76f98d23366b)
+육류 및 유저 데이터의 조회/입력/수정/통계/예측 등 관리 및 조회가 가능한 어드민 웹 페이지입니다.
+
+관리자 및 연구자가 사용하기 위한 페이지로 개발되었습니다.
 
 > 접속 주소 : http://deeplant-web.s3-website.ap-northeast-2.amazonaws.com
 
@@ -34,6 +37,7 @@
 
 ### 사용자 관리
 - 사용자 검색, 신규 회원 등록, 권한 변경, 사용자 삭제 기능
+- 관리자 권한의 사용자만 접근 가능
 
 ---
 
@@ -86,75 +90,75 @@ test-web
   │  index.js
   ├─components
   │  ├─DataDetailPage // 육류 상세 페이지 feature
-  │  │  │  DetailDataController.js
-  │  │  ├─api
-  │  │  │  │  isPost.js
-  │  │  │  │  updateDataStatus.js
-  │  │  │  │  uploadNewImgToFirebase.js
+  │  │  │  DetailDataController.js // 데이터 fetch 및 페이지 로드 컴포넌트
+  │  │  ├─api // 데이터 추가, 삭제, fetch, 예측 api
+  │  │  │  │  isPost.js // 육류 데이터 입력 시 POST, PATCH 판단
+  │  │  │  │  updateDataStatus.js // 육류 승인, 반려, 대기 상태 변경 함수
+  │  │  │  │  uploadNewImgToFirebase.js // firebase 이미지 업로드
   │  │  │  ├─add
-  │  │  │  │      addDeepAging.js
-  │  │  │  │      addHeatedData.js
-  │  │  │  │      addProbexptData.js
-  │  │  │  │      addSensoryProcessedData.js
-  │  │  │  │      addSensoryRawData.js
-  │  │  │  │      addSensoryRawImg.js
+  │  │  │  │      addDeepAging.js // 처리육 회차 추가
+  │  │  │  │      addHeatedData.js // 가열육 관능 데이터 수정, 추가
+  │  │  │  │      addProbexptData.js // 실험실 데이터 수정, 추가
+  │  │  │  │      addSensoryProcessedData.js // 처리육 관능 데이터 수정, 추가
+  │  │  │  │      addSensoryRawData.js // 승인되지 않은 원육 관능 데이터 수정, 추가
+  │  │  │  │      addSensoryRawImg.js // 원육 이미지 수정, 추가
   │  │  │  ├─delete
-  │  │  │  │      deleteDeepAging.js
+  │  │  │  │      deleteDeepAging.js // 처리육 회차 삭제
   │  │  │  ├─get
-  │  │  │  │      getDetailMeatDataSWR.js
-  │  │  │  │      getOpencvImageDataSWR.js
-  │  │  │  │      getPredictedData.js
+  │  │  │  │      getDetailMeatDataSWR.js // 해당 일련번호 육류 상세 데이터 fetch
+  │  │  │  │      getOpencvImageDataSWR.js // 해당 일련번호, 회차 육류 이미지에 대한 Opencv 데이터 fetch
+  │  │  │  │      getPredictedData.js // 해당 일련번호 예측 데이터 fetch
   │  │  │  └─predict
-  │  │  │          predictOpencvImageData.js
-  │  │  │          predictOpencvTrainingData.js
-  │  │  │          predictSensoryData.js
+  │  │  │          predictOpencvImageData.js // 육류 이미지 Opencv 데이터 처리 요청
+  │  │  │          predictOpencvTrainingData.js // 육류 예측 위한 학습용 데이터 처리 요청
+  │  │  │          predictSensoryData.js // 관능 데이터 예측 요청
   │  │  ├─constants
-  │  │  │      infofield.js
+  │  │  │      infofield.js // table 데이터 레이블 정보 
   │  │  ├─DetailDataController
-  │  │  │  │  DataConfirmView.js
-  │  │  │  │  DataPAView.js
-  │  │  │  │  dataProcessing.js
-  │  │  │  │  DataView.js
+  │  │  │  │  DataConfirmView.js // 육류 승인, 반려 컴포넌트
+  │  │  │  │  DataPAView.js // 육류 예측 컴포넌트
+  │  │  │  │  dataProcessing.js // 축산물 이력 데이터를 json 객체로 변환하는 함수
+  │  │  │  │  DataView.js // 육류 상세 데이터 조회, 수정 컴포넌트
   │  │  │  ├─DataViewComps
-  │  │  │  │  │  RestrictedModal.js
+  │  │  │  │  │  RestrictedModal.js // 이미지 수정 api 전송 실패 모달창
   │  │  │  │  ├─CardComps
-  │  │  │  │  │  │  MeatImgsCard.js
-  │  │  │  │  │  │  MeatImgsCardStatic.js
-  │  │  │  │  │  │  QRInfoCard.js
-  │  │  │  │  │  └─MeatImgsCard
-  │  │  │  │  │      │  handleImgChange.js
-  │  │  │  │  │      │  OpencvImgMaker.js
+  │  │  │  │  │  │  MeatImgsCard.js // 육류 이미지 표시 Card 컴포넌트
+  │  │  │  │  │  │  MeatImgsCardStatic.js // 수정 기능 없는 육류 이미지 표시 Card 컴포넌트
+  │  │  │  │  │  │  QRInfoCard.js // QR 정보 표시 Card 컴포넌트
+  │  │  │  │  │  └─MeatImgsCard 
+  │  │  │  │  │      │  handleImgChange.js // 이미지 변경 처리 함수
+  │  │  │  │  │      │  OpencvImgMaker.js // Opencv 데이터 바탕으로 호버링 시 출력되는 단면 이미지, 팔레트 컴포넌트
   │  │  │  │  │      └─OpencvImgMaker
-  │  │  │  │  │              ColorPaletteMaker.js
+  │  │  │  │  │              ColorPaletteMaker.js // Opencv 지방, 단백질 색상 팔레트 컴포넌트
   │  │  │  │  ├─DataConfirmView
-  │  │  │  │  │      AcceptModal.js
-  │  │  │  │  │      RejectModal.js
-  │  │  │  │  │      StateChangedModal.js
+  │  │  │  │  │      AcceptModal.js // 승인 여부 확인 모달
+  │  │  │  │  │      RejectModal.js // 반려 여부 확인 모달
+  │  │  │  │  │      StateChangedModal.js // 변경 완료 확인 모달
   │  │  │  │  ├─DataPAView
-  │  │  │  │  │      imgRot.css
+  │  │  │  │  │      imgRot.css // 예측 페이지 css 파일
   │  │  │  │  ├─DataView
-  │  │  │  │  │      AgingInfoDelete.js
-  │  │  │  │  │      AgingInfoRegister.js
-  │  │  │  │  │      DeepInfoCompleteModal.js
-  │  │  │  │  └─TablesComps
-  │  │  │  │          ApiTable.js
-  │  │  │  │          HeatTable.js
-  │  │  │  │          HeatTableStatic.js
-  │  │  │  │          LabTable.js
-  │  │  │  │          LabTableStatic.js
-  │  │  │  │          PredictedProcessedTablePA.js
-  │  │  │  │          PredictedRawTable.js
-  │  │  │  │          ProcessedTable.js
-  │  │  │  │          ProcessedTableStatic.js
-  │  │  │  │          RawTable.js
+  │  │  │  │  │      AgingInfoDelete.js // 처리육 회차 삭제 모달
+  │  │  │  │  │      AgingInfoRegister.js // 처리육 회차 추가 모달
+  │  │  │  │  │      DeepInfoCompleteModal.js // 회차 변경 완료 확인 모달
+  │  │  │  │  └─TablesComps // 육류 데이터 테이블 컴포넌트. static은 조회 가능, 수정 불가. 그 외 조회, 수정 가능
+  │  │  │  │          ApiTable.js // 축산물 이력 테이블
+  │  │  │  │          HeatTable.js // 가열육 데이터 테이블 (조회, 수정 가능)
+  │  │  │  │          HeatTableStatic.js // 가열육 데이터 테이블 (조회 가능, 수정 불가)
+  │  │  │  │          LabTable.js // 실험실 데이터 테이블 
+  │  │  │  │          LabTableStatic.js // 실험실 데이터 테이블 (수정 불가)
+  │  │  │  │          PredictedProcessedTablePA.js // 처리육 예측 데이터 비교 조회 테이블 
+  │  │  │  │          PredictedRawTable.js //  원육 예측 데이터 비교 조회 테이블 
+  │  │  │  │          ProcessedTable.js // 처리육 데이터 테이블 
+  │  │  │  │          ProcessedTableStatic.js // 처리육 데이터 테이블 (수정 불가)
+  │  │  │  │          RawTable.js // 원육 데이터 테이블
   │  │  │  └─shared
-  │  │  │          computeTime.js
-  │  │  │          InputTransitionsModal.js
+  │  │  │          computeTime.js // 경과 시간, 현재 날짜 계산
+  │  │  │          InputTransitionsModal.js // 처리육 데이터 수정 전, 이미지 먼저 업로드 필수 알림 경고창
   │  │  ├─routes
-  │  │  │      DataConfirm.js
-  │  │  │      DataEdit.js
-  │  │  │      DataPredict.js
-  │  │  └─style // UI style
+  │  │  │      DataConfirm.js // 데이터 승인, 반려 페이지
+  │  │  │      DataEdit.js // 육류 상세 데이터 조회, 수정 페이지
+  │  │  │      DataPredict.js // 육류 예측 페이지
+  │  │  └─style // CSS style
   │  │          acceptmodalstyle.js
   │  │          datadetailroutestyle.js
   │  │          dataviewstyle.js
@@ -219,7 +223,7 @@ test-web
   │  │  ├─routes
   │  │  │      Dashboard.js // 대시보드 목록 페이지
   │  │  │      PA.js // 예측 목록 페이지
-  │  │  └─style
+  │  │  └─style // CSS style
   │  │          dashboardstyle.js
   │  │          datalistcompstyle.js
   │  │          dataliststyle.js
@@ -246,7 +250,7 @@ test-web
   │  │  │  ProfileEditForm.js // 정보 수정 폼 컴포넌트
   │  │  │  SelfDeleteConfirmationModal.js // 비밀번호 확인 후 삭제 재확인 모달
   │  │  └─routes
-  │  │          Profile.js
+  │  │          Profile.js // 프로필 페이지
   │  ├─Stats // 통계 화면 feature
   │  │  │  StatsTabs.js // 통계 탭 컴포넌트, 통계, 분포, 상관관계, 시계열 선택
   │  │  ├─api // 통계 정보 fetch api
@@ -257,7 +261,7 @@ test-web
   │  │  │      statisticSensoryProcessed.js // 처리육 관능 데이터
   │  │  │      statisticTime.js // 시계열 데이터
   │  │  ├─routes
-  │  │  │      Stats.js // 통계 화면 페이지, 날짜 필터
+  │  │  │      Stats.js // 통계 화면 페이지
   │  │  └─StatsTabs // ApexCharts 사용
   │  │      ├─BoxPlot // 박스 플롯
   │  │      │      BoxPlotChart.js // 컴포넌트
@@ -283,7 +287,7 @@ test-web
   │  │  │      userRegister.js // 유저 등록 api
   │  │  ├─routes
   │  │  │      UserManagement.js // 사용자 관리 페이지, 접근 유저 권한 확인
-  │  │  └─UserMangementField // 유저리스트 표
+  │  │  └─UserMangementField 
   │  │      │  DeleteConfirmationModal.js // 유저 삭제 확인 모달
   │  │      │  handleUserDelete.js // 유저 삭제 핸들러 함수
   │  │      │  handleUserSearch.js // 유저 검색, 필터링 이벤트 핸들러 함수
@@ -299,7 +303,7 @@ test-web
   │      │  WidgetBars.js // 위젯바 컴포넌트, 사이드바 여닫힘, 스낵바, 페이지 이동 관리
   │      ├─constants
   │      │      pageListItems.js // 사이드바 클릭시 이동할 페이지 정보
-  │      ├─style
+  │      ├─style // CSS style
   │      │      selectbtnstyle.js 
   │      └─WidgetBars
   │              AppBar.js // 화면 상단 앱바 컴포넌트
@@ -313,10 +317,10 @@ test-web
   │  │  │  CustomSnackbar.js // 화면 우측 상단 커스텀 스낵바 알림 컴포넌트
   │  │  └─Search // 검색위한 날짜 필터 컴포넌트
   │  │      │  SearchFilterBar.js // 필터 작동 구현 
-  │  │      └─style
+  │  │      └─style // CSS style
   │  │              searchfilterbarstyle.js 
   │  └─Utils // 공유 함수 등
-  │          updateDates.js // 필터 등 사용되는 'total', 'year', 'quarter', 'month', 'week' 값을 Date 값으로 업데이트
+  │          updateDates.js // 날짜 기간의 duration 값을 ISO 형식으로 변환
   │          useLogout.js // 로그아웃 처리
   │          UserContext.js // react Context 기능으로 유저 Context 정의
   └─src_assets // 사용되는 이미지 (png 등)
