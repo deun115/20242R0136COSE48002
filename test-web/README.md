@@ -63,11 +63,7 @@
 | :-------------------------------------------------------------------------: | :--------------------------------------------------------------------------: | :---------------------------------------------------------------------------: |
 | <img src="https://avatars.githubusercontent.com/recon48" width="200"> | <img src="https://avatars.githubusercontent.com/sdouf5054" width="200"> | <img src="https://avatars.githubusercontent.com/skitw427" width="200"> |
 |               [GitHub: @recon48](https://github.com/recon48)                |              [GitHub: @sdouf5054](https://github.com/sdouf5054)              |                [GitHub: @skitw427](https://github.com/skitw427)                 |
-|                         고려대학교 컴퓨터학과 3학년                         |                        고려대학교 데이터과학과 3학년                         |                          고려대학교 컴퓨터학과 2학년                          |
-
-## 환경 설정 ???
-
-... 시작 가이드 등
+|                         고려대학교 컴퓨터학과 3학년                         |                        고려대학교 컴퓨터학과 3학년                         |                          고려대학교 컴퓨터학과 2학년                          |
 
 ## 프로젝트 구성
 
