@@ -9,6 +9,20 @@
 
 > 접속 주소 : http://deeplant-web.s3-website.ap-northeast-2.amazonaws.com
 
+## 시작 가이드
+Installation
+```
+$ git clone https://github.com/deun115/20242R0136COSE48002.git 
+$ cd 20242R0136COSE48002
+```
+
+Start Web
+```
+$ cd test-web
+# test-web 폴더에서 실행
+$ npm run start
+```
+
 
 ## 주요 기능
 
